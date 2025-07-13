@@ -12,10 +12,18 @@
         <action
             android:id="@+id/action_homeFragment_to_insertFragment"
             app:destination="@id/insertFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/insertFragment"
         android:name="com.pmprogramms.expensetracker.view.fragments.InsertFragment"
         android:label="fragment_insert"
         tools:layout="@layout/fragment_insert" />
+    <fragment
+        android:id="@+id/addCategoryFragment"
+        android:name="com.pmprogramms.expensetracker.view.fragments.categories.AddCategoryFragment"
+        android:label="fragment_add_category"
+        tools:layout="@layout/fragment_add_category" />
 </navigation>

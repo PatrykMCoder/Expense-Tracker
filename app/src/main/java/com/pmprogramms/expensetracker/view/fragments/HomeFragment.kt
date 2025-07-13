@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -31,6 +32,11 @@ class HomeFragment : Fragment() {
 
         binding.button.setOnClickListener {
             findNavController().navigate(R.id.insertFragment)
+        }
+
+        binding.button.setOnLongClickListener {
+            findNavController().navigate(R.id.addCategoryFragment)
+            return@setOnLongClickListener true
         }
 
         viewModel.allExpenses.observe(viewLifecycleOwner) { data ->
