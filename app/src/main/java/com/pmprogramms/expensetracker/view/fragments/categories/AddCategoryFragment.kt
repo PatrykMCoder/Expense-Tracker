@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.pmprogramms.expensetracker.databinding.FragmentAddCategoryBinding
 import com.pmprogramms.expensetracker.viewmodel.CategoriesViewModel
 
@@ -27,7 +28,7 @@ class AddCategoryFragment : Fragment() {
 
         binding.addCategoryButton.setOnClickListener {
             viewModel.insertCategories(binding.categoryNameEt.text.trim().toString()) {
-//                findNavController().popBackStack()
+                findNavController().popBackStack()
             }
         }
 

@@ -5,21 +5,16 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pmprogramms.expensetracker.R
 import com.pmprogramms.expensetracker.adapter.ExpensesAdapter
 import com.pmprogramms.expensetracker.adapter.listeners.ExpenseClickListener
 import com.pmprogramms.expensetracker.databinding.FragmentHomeBinding
-import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import com.pmprogramms.expensetracker.viewmodel.ExpensesViewModel
-import kotlin.reflect.typeOf
 
 class HomeFragment : Fragment() {
 

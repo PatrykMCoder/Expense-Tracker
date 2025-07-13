@@ -11,6 +11,7 @@ import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import com.pmprogramms.expensetracker.repository.ExpensesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ExpensesViewModel(application: Application): AndroidViewModel(application) {
     val allExpenses: LiveData<List<ExpenseWithCategory>>
@@ -26,7 +27,9 @@ class ExpensesViewModel(application: Application): AndroidViewModel(application)
     fun insertExpense(name: String, value: Double, categoryId: Int, expenseType: ExpenseType, onComplete: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertExpense(name, value, categoryId, expenseType)
-            onComplete()
+            withContext(Dispatchers.Main) {
+                onComplete()
+            }
         }
     }
 }

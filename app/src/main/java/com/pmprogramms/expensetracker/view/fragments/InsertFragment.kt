@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.pmprogramms.expensetracker.databinding.FragmentInsertBinding
 import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.model.Category
@@ -49,6 +49,7 @@ class InsertFragment : Fragment() {
             val category = binding.categorySpinner.selectedItem as? Category
                 if (category != null) {
                     expensesViewModel.insertExpense(name, value, category.categoryID, ExpenseType.OUT) {
+                      findNavController().popBackStack()
                     }
                 }
         }

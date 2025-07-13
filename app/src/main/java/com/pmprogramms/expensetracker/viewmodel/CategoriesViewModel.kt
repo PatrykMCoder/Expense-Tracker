@@ -11,6 +11,7 @@ import com.pmprogramms.expensetracker.repository.CategoriesRepository
 import com.pmprogramms.expensetracker.repository.ExpensesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CategoriesViewModel(application: Application): AndroidViewModel(application) {
     val allCategories: LiveData<List<Category>>
@@ -26,7 +27,9 @@ class CategoriesViewModel(application: Application): AndroidViewModel(applicatio
     fun insertCategories(name: String, onComplete: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertCategory(name)
-            onComplete()
+            withContext(Dispatchers.Main) {
+                onComplete()
+            }
         }
     }
 }
