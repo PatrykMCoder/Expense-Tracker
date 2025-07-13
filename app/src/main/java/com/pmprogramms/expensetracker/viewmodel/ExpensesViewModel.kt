@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.pmprogramms.expensetracker.database.Database
+import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.model.Expense
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import com.pmprogramms.expensetracker.repository.ExpensesRepository
@@ -22,9 +23,9 @@ class ExpensesViewModel(application: Application): AndroidViewModel(application)
         allExpenses = repository.allExpenses
     }
 
-    fun insertExpense(name: String, value: Double, categoryId: Int, onComplete: () -> Unit) {
+    fun insertExpense(name: String, value: Double, categoryId: Int, expenseType: ExpenseType, onComplete: () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertExpense(name, value, categoryId)
+            repository.insertExpense(name, value, categoryId, expenseType)
             onComplete()
         }
     }

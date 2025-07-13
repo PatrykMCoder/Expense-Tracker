@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.pmprogramms.expensetracker.databinding.FragmentInsertBinding
+import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.model.Category
 import com.pmprogramms.expensetracker.viewmodel.CategoriesViewModel
 import com.pmprogramms.expensetracker.viewmodel.ExpensesViewModel
@@ -47,7 +48,7 @@ class InsertFragment : Fragment() {
             val value = binding.value.text.trim().toString().toDouble()
             val category = binding.categorySpinner.selectedItem as? Category
                 if (category != null) {
-                    expensesViewModel.insertExpense(name, value, category.categoryID) {
+                    expensesViewModel.insertExpense(name, value, category.categoryID, ExpenseType.OUT) {
                     }
                 }
         }
