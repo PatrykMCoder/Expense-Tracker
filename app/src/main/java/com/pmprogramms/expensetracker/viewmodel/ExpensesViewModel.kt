@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.pmprogramms.expensetracker.database.Database
 import com.pmprogramms.expensetracker.enums.ExpenseType
-import com.pmprogramms.expensetracker.model.Expense
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import com.pmprogramms.expensetracker.repository.ExpensesRepository
 import kotlinx.coroutines.Dispatchers
