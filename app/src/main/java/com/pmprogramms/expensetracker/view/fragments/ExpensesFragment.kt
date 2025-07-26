@@ -7,19 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.pmprogramms.expensetracker.R
 import com.pmprogramms.expensetracker.adapter.ExpensesAdapter
 import com.pmprogramms.expensetracker.adapter.listeners.ExpenseClickListener
-import com.pmprogramms.expensetracker.databinding.FragmentHomeBinding
+import com.pmprogramms.expensetracker.databinding.FragmentExpensesBinding
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import com.pmprogramms.expensetracker.viewmodel.ExpensesViewModel
 
-class HomeFragment : Fragment() {
-
-    private var _binding: FragmentHomeBinding? = null
+class ExpensesFragment : Fragment() {
+    private var _binding: FragmentExpensesBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: ExpensesViewModel by viewModels()
@@ -31,16 +28,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        _binding = FragmentHomeBinding.inflate(layoutInflater)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentExpensesBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val expensesAdapter = ExpensesAdapter(true)
+        val expensesAdapter = ExpensesAdapter(false)
         expensesAdapter.setOnClickListener(onExpenseClickListener)
 
         val linearLayoutManager = LinearLayoutManager(requireContext())
@@ -53,23 +51,11 @@ class HomeFragment : Fragment() {
             addItemDecoration(decorator)
         }
 
-        binding.addButton.setOnClickListener {
-            findNavController().navigate(R.id.insertFragment)
-        }
-
-        binding.showCategoriesButton.setOnClickListener {
-
-        }
-
-        binding.showAllButton.setOnClickListener {
-            findNavController().navigate(R.id.expensesFragment)
-        }
-
         viewModel.allExpenses.observe(viewLifecycleOwner) { data ->
             expensesAdapter.setItems(data)
         }
-    }
 
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

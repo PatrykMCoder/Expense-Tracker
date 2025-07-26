@@ -1,7 +1,7 @@
 package com.pmprogramms.expensetracker.adapter
 
 import android.view.LayoutInflater
-import android.view.View.OnClickListener
+
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,9 +11,10 @@ import com.pmprogramms.expensetracker.adapter.listeners.ExpenseClickListener
 import com.pmprogramms.expensetracker.databinding.ExpenseItemBinding
 import com.pmprogramms.expensetracker.helper.StringHelper
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
-import kotlin.math.exp
+import kotlin.math.min
 
-class ExpensesAdapter: RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder>() {
+
+class ExpensesAdapter(private val limited: Boolean): RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder>() {
     private lateinit var onClickListener: ExpenseClickListener
     private val items = ArrayList<ExpenseWithCategory>()
 
@@ -22,7 +23,7 @@ class ExpensesAdapter: RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder>(
             val expense = expenseWithCategory.expense
             val category = expenseWithCategory.category
 
-            binding.name.text = expense.name
+            binding.titleExpense.text = expense.name
             binding.value.text = "${StringHelper.getChar(expense.expenseType)}${expense.value} ${StringHelper.getCurrentCurrency()}"
             binding.category.text = category.categoryName
 
@@ -51,7 +52,11 @@ class ExpensesAdapter: RecyclerView.Adapter<ExpensesAdapter.ExpensesViewHolder>(
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return if (limited) {
+            min(items.size, 20)
+        } else {
+            items.size
+        }
     }
 
     override fun onBindViewHolder(holder: ExpensesViewHolder, position: Int) {

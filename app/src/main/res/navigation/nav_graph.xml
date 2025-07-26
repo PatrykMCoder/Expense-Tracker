@@ -8,13 +8,16 @@
         android:id="@+id/homeFragment"
         android:name="com.pmprogramms.expensetracker.view.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_insertFragment"
             app:destination="@id/insertFragment" />
         <action
             android:id="@+id/action_homeFragment_to_addCategoryFragment"
             app:destination="@id/addCategoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_expensesFragment"
+            app:destination="@id/expensesFragment" />
     </fragment>
     <fragment
         android:id="@+id/insertFragment"
@@ -26,4 +29,9 @@
         android:name="com.pmprogramms.expensetracker.view.fragments.categories.AddCategoryFragment"
         android:label="fragment_add_category"
         tools:layout="@layout/fragment_add_category" />
+    <fragment
+        android:id="@+id/expensesFragment"
+        android:name="com.pmprogramms.expensetracker.view.fragments.ExpensesFragment"
+        android:label="fragment_expenses"
+        tools:layout="@layout/fragment_expenses" />
 </navigation>

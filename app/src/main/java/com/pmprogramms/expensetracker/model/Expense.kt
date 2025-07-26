@@ -17,5 +17,6 @@ data class Expense(
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "value") val value: Double?,
     @ColumnInfo(name = "category_id") val categoryID: Int,
-    @ColumnInfo(name = "type") val expenseType: ExpenseType
+    @ColumnInfo(name = "type") val expenseType: ExpenseType,
+//    @ColumnInfo(name = "createdAt") val createdAt: Long
 )
