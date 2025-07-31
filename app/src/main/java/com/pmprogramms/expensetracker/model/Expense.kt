@@ -16,7 +16,7 @@ data class Expense(
     @PrimaryKey(autoGenerate = true) val uid: Int,
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "value") val value: Double?,
-    @ColumnInfo(name = "category_id") val categoryID: Int,
+    @ColumnInfo(name = "category_id") val categoryID: Int? = null,
     @ColumnInfo(name = "type") val expenseType: ExpenseType,
-//    @ColumnInfo(name = "createdAt") val createdAt: Long
+    @ColumnInfo(name = "created_at") val createdAt: Long
 )

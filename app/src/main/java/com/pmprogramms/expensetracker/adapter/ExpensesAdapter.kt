@@ -25,7 +25,7 @@ class ExpensesAdapter(private val limited: Boolean): RecyclerView.Adapter<Expens
 
             binding.titleExpense.text = expense.name
             binding.value.text = "${StringHelper.getChar(expense.expenseType)}${expense.value} ${StringHelper.getCurrentCurrency()}"
-            binding.category.text = category.categoryName
+            binding.category.text = category?.categoryName
 
             binding.root.setOnClickListener {
                 onClickListener.onClick(expenseWithCategory)

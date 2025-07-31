@@ -74,6 +74,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/today_balance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="- $3,142"
@@ -101,6 +102,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/weekly_balance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"

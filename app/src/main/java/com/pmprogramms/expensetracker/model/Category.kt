@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Category(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("category_id")
-    val categoryID: Int,
+    val categoryID: Int? = null,
     @ColumnInfo(name = "category_name") val categoryName: String
 ) {
     override fun toString(): String = categoryName

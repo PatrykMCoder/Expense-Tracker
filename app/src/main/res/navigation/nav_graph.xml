@@ -13,11 +13,11 @@
             android:id="@+id/action_homeFragment_to_insertFragment"
             app:destination="@id/insertFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_addCategoryFragment"
-            app:destination="@id/addCategoryFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_expensesFragment"
             app:destination="@id/expensesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
     </fragment>
     <fragment
         android:id="@+id/insertFragment"
@@ -25,13 +25,22 @@
         android:label="fragment_insert"
         tools:layout="@layout/fragment_insert" />
     <fragment
+        android:id="@+id/expensesFragment"
+        android:name="com.pmprogramms.expensetracker.view.fragments.ExpensesFragment"
+        android:label="fragment_expenses"
+        tools:layout="@layout/fragment_expenses" />
+    <fragment
         android:id="@+id/addCategoryFragment"
         android:name="com.pmprogramms.expensetracker.view.fragments.categories.AddCategoryFragment"
         android:label="fragment_add_category"
         tools:layout="@layout/fragment_add_category" />
     <fragment
-        android:id="@+id/expensesFragment"
-        android:name="com.pmprogramms.expensetracker.view.fragments.ExpensesFragment"
-        android:label="fragment_expenses"
-        tools:layout="@layout/fragment_expenses" />
+        android:id="@+id/categoriesFragment"
+        android:name="com.pmprogramms.expensetracker.view.fragments.categories.CategoriesFragment"
+        android:label="fragment_categories"
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment" />
+    </fragment>
 </navigation>

@@ -47,10 +47,8 @@ class InsertFragment : Fragment() {
             val name = binding.name.text.trim().toString()
             val value = binding.value.text.trim().toString().toDouble()
             val category = binding.categorySpinner.selectedItem as? Category
-                if (category != null) {
-                    expensesViewModel.insertExpense(name, value, category.categoryID, ExpenseType.OUT) {
-                      findNavController().popBackStack()
-                    }
+                expensesViewModel.insertExpense(name, value, category?.categoryID, ExpenseType.OUT) {
+                    findNavController().popBackStack()
                 }
         }
 

@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
             val date = btmSheet.findViewById<TextView>(R.id.date)
 
             title.text = "Title: ${expenseWithCategory.expense.name}"
-            category.text = "Category: ${expenseWithCategory.category.categoryName}"
+            category.text = "Category: ${expenseWithCategory.category?.categoryName}"
             date.text = "no date"
             value.text = "${StringHelper.getChar(expenseWithCategory.expense.expenseType)}${expenseWithCategory.expense.value} ${StringHelper.getCurrentCurrency()}"
 
@@ -87,7 +87,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.showCategoriesButton.setOnClickListener {
-
+            findNavController().navigate(R.id.categoriesFragment)
         }
 
         binding.showAllButton.setOnClickListener {
@@ -97,6 +97,19 @@ class HomeFragment : Fragment() {
         viewModel.allExpenses.observe(viewLifecycleOwner) { data ->
             expensesAdapter.setItems(data)
         }
+
+        viewModel.getCurrentMonthBalance(0, 0).observe(viewLifecycleOwner) { data ->
+            binding.balanceTextView.text = "${data} ${StringHelper.getCurrentCurrency()}"
+        }
+
+        viewModel.getWeekBalance(0, 0).observe(viewLifecycleOwner) { data ->
+            binding.weeklyBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
+        }
+
+        viewModel.getTodayBalance(0, 0).observe(viewLifecycleOwner) { data ->
+            binding.todayBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
+        }
+
     }
 
 

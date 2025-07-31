@@ -39,7 +39,7 @@ class ExpensesFragment : Fragment() {
             val date = btmSheet.findViewById<TextView>(R.id.date)
 
             title.text = "Title: ${expenseWithCategory.expense.name}"
-            category.text = "Category: ${expenseWithCategory.category.categoryName}"
+            category.text = "Category: ${expenseWithCategory.category?.categoryName}"
             date.text = "no date"
             value.text = "${StringHelper.getChar(expenseWithCategory.expense.expenseType)}${expenseWithCategory.expense.value} ${StringHelper.getCurrentCurrency()}"
 

@@ -11,5 +11,5 @@ data class ExpenseWithCategory(
         parentColumn = "category_id",
         entityColumn = "category_id"
     )
-    val category: Category
+    val category: Category?
 )
