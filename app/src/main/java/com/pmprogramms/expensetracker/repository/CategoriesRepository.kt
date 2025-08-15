@@ -8,7 +8,7 @@ class CategoriesRepository(private val categoryDao: CategoryDao) {
     val allCategories: LiveData<List<Category>> = categoryDao.getAllCategories()
 
     suspend fun insertCategory(name: String) {
-        val category = Category(0, name)
+        val category = Category(null, name)
         categoryDao.insertCategory(category)
     }
 

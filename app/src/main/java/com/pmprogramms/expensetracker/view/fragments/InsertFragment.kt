@@ -38,16 +38,25 @@ class InsertFragment : Fragment() {
 
         binding.categorySpinner.adapter = spinnerAdapter
 
-        categoriesViewModel.allCategories.observe(viewLifecycleOwner) { categories ->
+        categoriesViewModel.allCategories.observe(viewLifecycleOwner) {
             spinnerAdapter.clear()
+            val categories = ArrayList<Category?>()
+            val emptyCategory = Category(null, "No category")
+            categories.add(emptyCategory)
+            categories.addAll(it)
             spinnerAdapter.addAll(categories)
         }
 
         binding.button.setOnClickListener {
-            val name = binding.name.text.trim().toString()
-            val value = binding.value.text.trim().toString().toDouble()
+            val name = binding.expenseName.text.trim().toString()
+            val value = binding.expenseValue.text.trim().toString().toDouble()
             val category = binding.categorySpinner.selectedItem as? Category
-                expensesViewModel.insertExpense(name, value, category?.categoryID, ExpenseType.OUT) {
+                val categoryID = if (category?.categoryID != null) {
+                    category.categoryID
+                } else {
+                    null
+                }
+                expensesViewModel.insertExpense(name, value, categoryID, ExpenseType.OUT) {
                     findNavController().popBackStack()
                 }
         }
