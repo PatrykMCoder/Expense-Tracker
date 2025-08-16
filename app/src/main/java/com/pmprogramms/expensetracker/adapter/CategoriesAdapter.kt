@@ -5,15 +5,21 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.pmprogramms.expensetracker.adapter.listeners.CategoriesClickListener
 import com.pmprogramms.expensetracker.databinding.CategoryItemBinding
 import com.pmprogramms.expensetracker.model.Category
 
 class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
+    private lateinit var categoriesClickListener: CategoriesClickListener
     private var items: ArrayList<Category> = ArrayList()
 
     inner class CategoriesViewHolder(private val categoryItemBinding: CategoryItemBinding): RecyclerView.ViewHolder(categoryItemBinding.root) {
         fun bind(category: Category) {
             categoryItemBinding.categoryName.text = category.categoryName
+
+            categoryItemBinding.deleteButton.setOnClickListener {
+                categoriesClickListener.onDeleteClick(category.categoryID!!)
+            }
         }
     }
 
@@ -37,5 +43,9 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewH
 
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
         holder.bind(items[position])
+    }
+
+    fun setOnCategoriesClickListener(categoriesClickListener: CategoriesClickListener) {
+        this.categoriesClickListener = categoriesClickListener
     }
 }
