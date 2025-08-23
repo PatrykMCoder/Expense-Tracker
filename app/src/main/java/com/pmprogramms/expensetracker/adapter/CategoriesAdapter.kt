@@ -20,6 +20,10 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewH
             categoryItemBinding.deleteButton.setOnClickListener {
                 categoriesClickListener.onDeleteClick(category.categoryID!!)
             }
+
+            categoryItemBinding.editButton.setOnClickListener {
+                categoriesClickListener.onEditClick(category.categoryID!!)
+            }
         }
     }
 

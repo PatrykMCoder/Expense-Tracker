@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.pmprogramms.expensetracker.database.Database
 import com.pmprogramms.expensetracker.database.state.DeleteState
+import com.pmprogramms.expensetracker.database.state.UpdateState
 import com.pmprogramms.expensetracker.model.Category
 import com.pmprogramms.expensetracker.repository.CategoriesRepository
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,9 @@ class CategoriesViewModel(application: Application): AndroidViewModel(applicatio
     private val repository: CategoriesRepository
     private val _deleteState = MutableLiveData<DeleteState<Unit>>()
     val deleteState = _deleteState
+
+    private val _updateState = MutableLiveData<UpdateState<Unit>>()
+    val updateState = _updateState
 
     init {
         val dao = Database.getDatabase(application).getCategoriesDao()
@@ -43,6 +47,20 @@ class CategoriesViewModel(application: Application): AndroidViewModel(applicatio
             repository.deleteCategory(categoryID).fold(
                 onSuccess = { _deleteState.value = DeleteState.Success(Unit) },
                 onFailure = { _deleteState.value = DeleteState.Error(it) }
+            )
+        }
+    }
+
+    fun getCategoryById(id: Int): LiveData<Category> {
+        return repository.getCategoryById(id)
+    }
+
+    fun updateCategoryNameById(id: Int, newName: String) {
+        viewModelScope.launch {
+            _updateState.value = UpdateState.Loading
+            repository.updateCategoryNameById(id, newName).fold(
+                onSuccess =  { _updateState.value = UpdateState.Success(Unit) },
+                onFailure = { _updateState.value = UpdateState.Error(it) }
             )
         }
     }

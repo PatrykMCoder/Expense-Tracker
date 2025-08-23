@@ -28,6 +28,11 @@ class CategoriesFragment : Fragment() {
             viewModel.deleteCategory(categoryID)
         }
 
+        override fun onEditClick(categoryID: Int) {
+            val direction = CategoriesFragmentDirections.actionCategoriesFragmentToEditCategoryFragment(id = categoryID)
+            findNavController().navigate(direction)
+        }
+
     }
 
     override fun onCreateView(

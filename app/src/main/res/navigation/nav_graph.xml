@@ -42,5 +42,16 @@
         <action
             android:id="@+id/action_categoriesFragment_to_addCategoryFragment"
             app:destination="@id/addCategoryFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_editCategoryFragment"
+            app:destination="@id/editCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCategoryFragment"
+        android:name="com.pmprogramms.expensetracker.view.fragments.categories.EditCategoryFragment"
+        android:label="EditCategoryFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
 </navigation>

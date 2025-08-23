@@ -21,4 +21,17 @@ class CategoriesRepository(private val categoryDao: CategoryDao) {
             Result.failure(e)
         }
     }
+
+     fun getCategoryById(id: Int): LiveData<Category> {
+       return categoryDao.getCategoryById(id)
+    }
+
+    suspend fun updateCategoryNameById(id: Int, newName: String): Result<Unit> {
+        return try {
+            categoryDao.updateCategoryNameById(id, newName)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

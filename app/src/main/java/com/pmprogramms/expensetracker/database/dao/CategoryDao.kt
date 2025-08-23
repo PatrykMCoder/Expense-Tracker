@@ -17,4 +17,10 @@ interface CategoryDao {
 
     @Query("DELETE from categories where category_id = :categoryID")
     suspend fun deleteCategoryByID(categoryID: Int)
+
+    @Query("SELECT * from categories where category_id = :id")
+    fun getCategoryById(id: Int): LiveData<Category>
+
+    @Query("UPDATE categories SET category_name = :newName where category_id = :id")
+    suspend fun updateCategoryNameById(id: Int, newName: String)
 }
