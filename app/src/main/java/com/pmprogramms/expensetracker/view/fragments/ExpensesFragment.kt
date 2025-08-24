@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pmprogramms.expensetracker.R
 import com.pmprogramms.expensetracker.adapter.ExpensesAdapter
 import com.pmprogramms.expensetracker.adapter.listeners.ExpenseClickListener
+import com.pmprogramms.expensetracker.database.state.DeleteState
 import com.pmprogramms.expensetracker.databinding.FragmentExpensesBinding
 import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.helper.StringHelper
@@ -92,6 +94,18 @@ class ExpensesFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = linearLayoutManager
             addItemDecoration(decorator)
+        }
+
+        viewModel.deleteState.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is DeleteState.Error -> { Toast.makeText(context, "Something wrong with delete expense...", Toast.LENGTH_SHORT).show() }
+                is DeleteState.Loading -> {}
+                is DeleteState.Success<*> -> {
+                    bottomSheetDialog?.dismiss()
+                    bottomSheetDialog = null
+                    Toast.makeText(context, "Expense deleted...", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         viewModel.allExpenses.observe(viewLifecycleOwner) { data ->
