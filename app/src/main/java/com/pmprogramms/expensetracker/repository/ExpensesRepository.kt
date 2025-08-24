@@ -1,6 +1,5 @@
 package com.pmprogramms.expensetracker.repository
 
-import android.util.Range
 import androidx.lifecycle.LiveData
 import com.pmprogramms.expensetracker.database.dao.ExpenseDao
 import com.pmprogramms.expensetracker.enums.ExpenseType
@@ -26,5 +25,25 @@ class ExpensesRepository(private val expenseDao: ExpenseDao) {
     fun getAllExpensesToday(now: Int, firstDayInMonth: Int): LiveData<List<ExpenseWithCategory>> {
         return expenseDao.getAllExpensesToday()
     }
+
+    suspend fun deleteExpense(expenseID: Int): Result<Unit> {
+        return try {
+            expenseDao.deleteExpenseByID(expenseID)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun updateExpense(id: Int, newName: String, newValue: Double, newCategoryID: Int?): Result<Unit> {
+        return try {
+            expenseDao.updateCategoryNameById(id, newName, newValue, newCategoryID)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    fun getExpenseById(expenseID: Int): LiveData<ExpenseWithCategory> = expenseDao.getExpenseByID(expenseID)
 
 }

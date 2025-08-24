@@ -1,6 +1,5 @@
 package com.pmprogramms.expensetracker.repository
 
-import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.LiveData
 import com.pmprogramms.expensetracker.database.dao.CategoryDao
 import com.pmprogramms.expensetracker.model.Category

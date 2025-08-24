@@ -26,4 +26,12 @@ interface ExpenseDao {
     @Query("select * from expenses")
     fun getAllExpensesToday(): LiveData<List<ExpenseWithCategory>>
 
+    @Query("DELETE from expenses where uid = :id")
+    suspend fun deleteExpenseByID(id: Int)
+
+    @Query("SELECT * from expenses where uid = :id")
+    fun getExpenseByID(id: Int): LiveData<ExpenseWithCategory>
+
+    @Query("UPDATE expenses SET name = :newName, value = :newValue, category_id = :newCategoryID where uid = :id")
+    suspend fun updateCategoryNameById(id: Int, newName: String, newValue: Double, newCategoryID: Int?)
 }

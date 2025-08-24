@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.pmprogramms.expensetracker.R
 import com.pmprogramms.expensetracker.adapter.ExpensesAdapter
 import com.pmprogramms.expensetracker.adapter.listeners.ExpenseClickListener
+import com.pmprogramms.expensetracker.database.state.DeleteState
 import com.pmprogramms.expensetracker.databinding.FragmentHomeBinding
 import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.helper.StringHelper
@@ -29,9 +32,11 @@ class HomeFragment : Fragment() {
 
     private val viewModel: ExpensesViewModel by viewModels()
 
+    private var bottomSheetDialog: BottomSheetDialog? = null
+
     private val onExpenseClickListener = object : ExpenseClickListener {
         override fun onClick(expenseWithCategory: ExpenseWithCategory) {
-            val bottomSheetDialog = BottomSheetDialog(requireContext())
+            bottomSheetDialog = BottomSheetDialog(requireContext())
 
             val btmSheet = layoutInflater.inflate(R.layout.bottom_sheet_dialog_expense, null)
 
@@ -39,6 +44,8 @@ class HomeFragment : Fragment() {
             val category = btmSheet.findViewById<TextView>(R.id.category)
             val value = btmSheet.findViewById<TextView>(R.id.value)
             val date = btmSheet.findViewById<TextView>(R.id.date)
+            val editButton = btmSheet.findViewById<Button>(R.id.edit_button)
+            val deleteButton = btmSheet.findViewById<Button>(R.id.delete_button)
 
             title.text = "Title: ${expenseWithCategory.expense.name}"
             category.text = "Category: ${expenseWithCategory.category?.categoryName}"
@@ -52,11 +59,21 @@ class HomeFragment : Fragment() {
                 ExpenseType.OUT -> {
                     value.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
                 }
-
             }
 
-            bottomSheetDialog.setContentView(btmSheet)
-            bottomSheetDialog.show()
+            deleteButton.setOnClickListener {
+                viewModel.deleteExpense(expenseWithCategory.expense.uid)
+            }
+
+            editButton.setOnClickListener {
+                bottomSheetDialog?.dismiss()
+                bottomSheetDialog = null
+                val direction = HomeFragmentDirections.actionHomeFragmentToEditExpenseFragment(expenseWithCategory.expense.uid)
+                findNavController().navigate(direction)
+            }
+
+            bottomSheetDialog?.setContentView(btmSheet)
+            bottomSheetDialog?.show()
         }
     }
 
@@ -110,6 +127,17 @@ class HomeFragment : Fragment() {
             binding.todayBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
+        viewModel.deleteState.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is DeleteState.Error -> { Toast.makeText(context, "Something wrong with delete expense...", Toast.LENGTH_SHORT).show() }
+                is DeleteState.Loading -> {}
+                is DeleteState.Success<*> -> {
+                    bottomSheetDialog?.dismiss()
+                    bottomSheetDialog = null
+                    Toast.makeText(context, "Expense deleted...", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
 
