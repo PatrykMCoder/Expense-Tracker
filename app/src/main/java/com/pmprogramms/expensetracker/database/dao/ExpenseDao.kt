@@ -16,15 +16,8 @@ interface ExpenseDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertExpense(expense: Expense)
 
-//    @Query("select * from expenses where createdAt between :firstDayInMonth and :now")
-    @Query("select * from expenses")
-    fun getAllExpensesByMonth(): LiveData<List<ExpenseWithCategory>>
-
-    @Query("select * from expenses")
-    fun getAllExpensesByWeek(): LiveData<List<ExpenseWithCategory>>
-
-    @Query("select * from expenses")
-    fun getAllExpensesToday(): LiveData<List<ExpenseWithCategory>>
+    @Query("select * from expenses where created_at between :start and :end")
+    fun getAllExpensesByRange(start: Long, end: Long): LiveData<List<ExpenseWithCategory>>
 
     @Query("DELETE from expenses where uid = :id")
     suspend fun deleteExpenseByID(id: Int)

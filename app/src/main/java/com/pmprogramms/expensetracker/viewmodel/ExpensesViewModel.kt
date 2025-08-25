@@ -43,40 +43,8 @@ class ExpensesViewModel(application: Application): AndroidViewModel(application)
         }
     }
 
-    fun getCurrentMonthBalance(now: Int, firstDayInMonth: Int): LiveData<Double> {
-        val currentMonthExpenses = repository.getAllExpensesByMonth(now, firstDayInMonth)
-        val totalAmount = MediatorLiveData<Double>()
-
-        totalAmount.addSource(currentMonthExpenses) { data ->
-            totalAmount.value = data.sumOf {
-                if (it.expense.expenseType == ExpenseType.IN) {
-                    it.expense.value!!
-                } else {
-                    it.expense.value!! * -1
-                }
-            }
-        }
-        return totalAmount
-    }
-
-    fun getTodayBalance(now: Int, firstDayInMonth: Int): LiveData<Double> {
-        val currentMonthExpenses = repository.getAllExpensesToday(now, firstDayInMonth)
-        val totalAmount = MediatorLiveData<Double>()
-
-        totalAmount.addSource(currentMonthExpenses) { data ->
-            totalAmount.value = data.sumOf {
-                if (it.expense.expenseType == ExpenseType.IN) {
-                    it.expense.value!!
-                } else {
-                    it.expense.value!! * -1
-                }
-            }
-        }
-        return totalAmount
-    }
-
-    fun getWeekBalance(now: Int, firstDayInMonth: Int): LiveData<Double> {
-        val currentMonthExpenses = repository.getAllExpensesByWeek(now, firstDayInMonth)
+    fun getAllExpensesByRange(start: Long, end: Long): LiveData<Double> {
+        val currentMonthExpenses = repository.getAllExpensesByRange(start, end)
         val totalAmount = MediatorLiveData<Double>()
 
         totalAmount.addSource(currentMonthExpenses) { data ->

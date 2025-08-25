@@ -14,16 +14,8 @@ class ExpensesRepository(private val expenseDao: ExpenseDao) {
         expenseDao.insertExpense(expense)
     }
 
-    fun getAllExpensesByMonth(now: Int, firstDayInMonth: Int): LiveData<List<ExpenseWithCategory>> {
-        return expenseDao.getAllExpensesByMonth()
-    }
-
-    fun getAllExpensesByWeek(now: Int, firstDayInMonth: Int): LiveData<List<ExpenseWithCategory>> {
-        return expenseDao.getAllExpensesByWeek()
-    }
-
-    fun getAllExpensesToday(now: Int, firstDayInMonth: Int): LiveData<List<ExpenseWithCategory>> {
-        return expenseDao.getAllExpensesToday()
+    fun getAllExpensesByRange(start: Long, end: Long): LiveData<List<ExpenseWithCategory>> {
+        return expenseDao.getAllExpensesByRange(start, end)
     }
 
     suspend fun deleteExpense(expenseID: Int): Result<Unit> {

@@ -23,6 +23,7 @@ import com.pmprogramms.expensetracker.databinding.FragmentHomeBinding
 import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.helper.StringHelper
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
+import com.pmprogramms.expensetracker.utils.DateHelper
 import com.pmprogramms.expensetracker.viewmodel.ExpensesViewModel
 
 class HomeFragment : Fragment() {
@@ -115,15 +116,24 @@ class HomeFragment : Fragment() {
             expensesAdapter.setItems(data)
         }
 
-        viewModel.getCurrentMonthBalance(0, 0).observe(viewLifecycleOwner) { data ->
+        val dayRangeStart = DateHelper.dayRange().first
+        val dayRangeEnd = DateHelper.dayRange().second
+
+        val weekRangeStart = DateHelper.dayRange().first
+        val weekRangeEnd = DateHelper.dayRange().second
+
+        val monthRangeStart = DateHelper.dayRange().first
+        val monthRangeEnd = DateHelper.dayRange().second
+
+        viewModel.getAllExpensesByRange(dayRangeStart, dayRangeEnd).observe(viewLifecycleOwner) { data ->
             binding.balanceTextView.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
-        viewModel.getWeekBalance(0, 0).observe(viewLifecycleOwner) { data ->
+        viewModel.getAllExpensesByRange(weekRangeStart, weekRangeEnd).observe(viewLifecycleOwner) { data ->
             binding.weeklyBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
-        viewModel.getTodayBalance(0, 0).observe(viewLifecycleOwner) { data ->
+        viewModel.getAllExpensesByRange(monthRangeStart, monthRangeEnd).observe(viewLifecycleOwner) { data ->
             binding.todayBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
