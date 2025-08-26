@@ -33,7 +33,7 @@
         android:inputType="number|numberDecimal"/>
 
     <include
-        android:id="@+id/divider_text"
+        android:id="@+id/divider_text_category"
         layout="@layout/divider_with_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,7 +50,27 @@
         android:layout_marginEnd="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider_text" />
+        app:layout_constraintTop_toBottomOf="@+id/divider_text_category" />
+
+    <include
+        android:id="@+id/divider_text_type_expense"
+        layout="@layout/divider_with_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
+
+    <Spinner
+        android:id="@+id/expense_type_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_text_type_expense" />
 
     <Button
         android:id="@+id/button"
@@ -62,6 +82,6 @@
         android:text="SAVE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category_spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/expense_type_spinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

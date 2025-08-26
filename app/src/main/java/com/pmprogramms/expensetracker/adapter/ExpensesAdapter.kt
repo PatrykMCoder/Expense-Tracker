@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.pmprogramms.expensetracker.R
 import com.pmprogramms.expensetracker.adapter.listeners.ExpenseClickListener
 import com.pmprogramms.expensetracker.databinding.ExpenseItemBinding
+import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.helper.StringHelper
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import kotlin.math.min
@@ -26,6 +29,15 @@ class ExpensesAdapter(private val limited: Boolean): RecyclerView.Adapter<Expens
             binding.titleExpense.text = expense.name
             binding.value.text = "${StringHelper.getChar(expense.expenseType)}${expense.value} ${StringHelper.getCurrentCurrency()}"
             binding.category.text = category?.categoryName
+
+            when (expenseWithCategory.expense.expenseType) {
+                ExpenseType.IN -> {
+                    binding.value.setTextColor(ContextCompat.getColor(binding.value.context, R.color.green))
+                }
+                ExpenseType.OUT -> {
+                    binding.value.setTextColor(ContextCompat.getColor(binding.value.context, R.color.red))
+                }
+            }
 
             binding.root.setOnClickListener {
                 onClickListener.onClick(expenseWithCategory)

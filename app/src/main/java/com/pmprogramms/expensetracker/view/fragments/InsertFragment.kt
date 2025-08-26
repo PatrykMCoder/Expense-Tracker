@@ -28,7 +28,7 @@ class InsertFragment : Fragment() {
     ): View {
         _binding = FragmentInsertBinding.inflate(layoutInflater)
 
-        val spinnerAdapter = ArrayAdapter<Category>(
+        val categoryArrayAdapter = ArrayAdapter<Category>(
             requireContext(),
             R.layout.simple_spinner_item,
             mutableListOf()
@@ -36,29 +36,43 @@ class InsertFragment : Fragment() {
             setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         }
 
-        binding.categorySpinner.adapter = spinnerAdapter
+        val expenseTypeAdapter = ArrayAdapter(
+            requireContext(),
+            R.layout.simple_spinner_item,
+            ExpenseType.entries.toTypedArray()
+        ).apply {
+            setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        }
+
+        binding.categorySpinner.adapter = categoryArrayAdapter
+        binding.expenseTypeSpinner.adapter = expenseTypeAdapter
+
+        binding.dividerTextCategory.dividerText.text = "Category"
+        binding.dividerTextTypeExpense.dividerText.text = "Type of expense"
 
         categoriesViewModel.allCategories.observe(viewLifecycleOwner) {
-            spinnerAdapter.clear()
+            categoryArrayAdapter.clear()
             val categories = ArrayList<Category?>()
             val emptyCategory = Category(null, "No category")
             categories.add(emptyCategory)
             categories.addAll(it)
-            spinnerAdapter.addAll(categories)
+            categoryArrayAdapter.addAll(categories)
         }
 
         binding.button.setOnClickListener {
             val name = binding.expenseName.text.trim().toString()
             val value = binding.expenseValue.text.trim().toString().toDouble()
             val category = binding.categorySpinner.selectedItem as? Category
-                val categoryID = if (category?.categoryID != null) {
-                    category.categoryID
-                } else {
-                    null
-                }
-                expensesViewModel.insertExpense(name, value, categoryID, ExpenseType.OUT) {
-                    findNavController().popBackStack()
-                }
+            val categoryID = if (category?.categoryID != null) {
+                category.categoryID
+            } else {
+                null
+            }
+            val expenseType = binding.expenseTypeSpinner.selectedItem as ExpenseType
+
+            expensesViewModel.insertExpense(name, value, categoryID, expenseType) {
+                findNavController().popBackStack()
+            }
         }
 
         return binding.root

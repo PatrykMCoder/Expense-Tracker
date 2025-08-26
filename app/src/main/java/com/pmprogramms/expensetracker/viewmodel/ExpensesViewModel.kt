@@ -69,10 +69,10 @@ class ExpensesViewModel(application: Application): AndroidViewModel(application)
         }
     }
 
-    fun updateExpense(id: Int, newName: String, newValue: Double, newCategoryID: Int?) {
+    fun updateExpense(id: Int, newName: String, newValue: Double, newCategoryID: Int?, newExpenseType: ExpenseType) {
         viewModelScope.launch {
             _updateState.value = UpdateState.Loading
-            repository.updateExpense(id, newName, newValue, newCategoryID).fold(
+            repository.updateExpense(id, newName, newValue, newCategoryID, newExpenseType).fold(
                 onSuccess = { _updateState.value = UpdateState.Success(Unit) },
                 onFailure = { _updateState.value = UpdateState.Error(it) }
             )

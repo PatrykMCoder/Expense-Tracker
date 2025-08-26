@@ -27,9 +27,9 @@ class ExpensesRepository(private val expenseDao: ExpenseDao) {
         }
     }
 
-    suspend fun updateExpense(id: Int, newName: String, newValue: Double, newCategoryID: Int?): Result<Unit> {
+    suspend fun updateExpense(id: Int, newName: String, newValue: Double, newCategoryID: Int?, newExpenseType: ExpenseType): Result<Unit> {
         return try {
-            expenseDao.updateCategoryNameById(id, newName, newValue, newCategoryID)
+            expenseDao.updateCategoryNameById(id, newName, newValue, newCategoryID, newExpenseType)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

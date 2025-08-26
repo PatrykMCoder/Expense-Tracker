@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.model.Expense
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 
@@ -25,6 +26,6 @@ interface ExpenseDao {
     @Query("SELECT * from expenses where uid = :id")
     fun getExpenseByID(id: Int): LiveData<ExpenseWithCategory>
 
-    @Query("UPDATE expenses SET name = :newName, value = :newValue, category_id = :newCategoryID where uid = :id")
-    suspend fun updateCategoryNameById(id: Int, newName: String, newValue: Double, newCategoryID: Int?)
+    @Query("UPDATE expenses SET name = :newName, value = :newValue, category_id = :newCategoryID, type = :newExpenseType where uid = :id")
+    suspend fun updateCategoryNameById(id: Int, newName: String, newValue: Double, newCategoryID: Int?, newExpenseType: ExpenseType)
 }
