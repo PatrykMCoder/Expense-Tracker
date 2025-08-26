@@ -119,14 +119,14 @@ class HomeFragment : Fragment() {
         val dayRangeStart = DateHelper.dayRange().first
         val dayRangeEnd = DateHelper.dayRange().second
 
-        val weekRangeStart = DateHelper.dayRange().first
-        val weekRangeEnd = DateHelper.dayRange().second
+        val weekRangeStart = DateHelper.weekRange().first
+        val weekRangeEnd = DateHelper.weekRange().second
 
-        val monthRangeStart = DateHelper.dayRange().first
-        val monthRangeEnd = DateHelper.dayRange().second
+        val monthRangeStart = DateHelper.monthRange().first
+        val monthRangeEnd = DateHelper.monthRange().second
 
         viewModel.getAllExpensesByRange(dayRangeStart, dayRangeEnd).observe(viewLifecycleOwner) { data ->
-            binding.balanceTextView.text = "${data} ${StringHelper.getCurrentCurrency()}"
+            binding.todayBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
         viewModel.getAllExpensesByRange(weekRangeStart, weekRangeEnd).observe(viewLifecycleOwner) { data ->
@@ -134,7 +134,7 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.getAllExpensesByRange(monthRangeStart, monthRangeEnd).observe(viewLifecycleOwner) { data ->
-            binding.todayBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
+            binding.balanceTextView.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
         viewModel.deleteState.observe(viewLifecycleOwner) { result ->
