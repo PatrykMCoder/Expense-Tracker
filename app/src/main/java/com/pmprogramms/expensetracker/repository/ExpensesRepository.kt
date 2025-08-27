@@ -7,8 +7,10 @@ import com.pmprogramms.expensetracker.model.Expense
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 
 class ExpensesRepository(private val expenseDao: ExpenseDao) {
-    val allExpenses: LiveData<List<ExpenseWithCategory>> = expenseDao.getAllExpenses()
 
+    fun getAllExpenses(categoryID: Int?, valueFrom: Double?, valueTo: Double?, tsFrom: Long?, tsTo: Long?, expenseType: ExpenseType?): LiveData<List<ExpenseWithCategory>> {
+        return expenseDao.getAllExpenses(categoryID, valueFrom, valueTo, tsFrom, tsTo, expenseType)
+    }
     suspend fun insertExpense(name: String, value: Double, categoryId: Int?, expenseType: ExpenseType) {
         val expense = Expense(0, name, value, categoryId, expenseType, System.currentTimeMillis())
         expenseDao.insertExpense(expense)
@@ -37,5 +39,4 @@ class ExpensesRepository(private val expenseDao: ExpenseDao) {
     }
 
     fun getExpenseById(expenseID: Int): LiveData<ExpenseWithCategory> = expenseDao.getExpenseByID(expenseID)
-
 }

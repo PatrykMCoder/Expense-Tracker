@@ -11,8 +11,8 @@ import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 
 @Dao
 interface ExpenseDao {
-    @Query("select * from expenses")
-    fun getAllExpenses(): LiveData<List<ExpenseWithCategory>>
+    @Query("select * from expenses where (:categoryID is NULL or category_id = :categoryID) and ((:valueFrom is NULL or :valueTo is NULL) or value between :valueFrom and :valueTo) and (:expenseType is NULL or type = :expenseType) and ((:tsFrom is NULL or :tsTo is NULL) or created_at between :tsFrom and :tsTo)")
+    fun getAllExpenses(categoryID: Int?, valueFrom: Double?, valueTo: Double?, tsFrom: Long?, tsTo: Long?, expenseType: ExpenseType?): LiveData<List<ExpenseWithCategory>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertExpense(expense: Expense)

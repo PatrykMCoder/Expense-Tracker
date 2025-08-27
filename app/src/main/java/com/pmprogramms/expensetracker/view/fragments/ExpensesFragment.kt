@@ -111,7 +111,6 @@ class ExpensesFragment : Fragment() {
         viewModel.allExpenses.observe(viewLifecycleOwner) { data ->
             expensesAdapter.setItems(data)
         }
-
     }
 
     override fun onDestroyView() {

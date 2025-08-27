@@ -5,12 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.pmprogramms.expensetracker.database.Database
 import com.pmprogramms.expensetracker.database.state.DeleteState
 import com.pmprogramms.expensetracker.database.state.UpdateState
 import com.pmprogramms.expensetracker.enums.ExpenseType
+import com.pmprogramms.expensetracker.helper.ExpenseFilter
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import com.pmprogramms.expensetracker.repository.ExpensesRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ExpensesViewModel(application: Application): AndroidViewModel(application) {
-    val allExpenses: LiveData<List<ExpenseWithCategory>>
     private val repository: ExpensesRepository
 
     private val _deleteState = MutableLiveData<DeleteState<Unit>>()
@@ -27,11 +27,19 @@ class ExpensesViewModel(application: Application): AndroidViewModel(application)
     private val _updateState = MutableLiveData<UpdateState<Unit>>()
     val updateState = _updateState
 
+    private val _expenseFilter: MutableLiveData<ExpenseFilter> = MutableLiveData<ExpenseFilter>()
+    val expenseFilter get() = _expenseFilter
+
+    val allExpenses: LiveData<List<ExpenseWithCategory>>
+
     init {
         val dao = Database.getDatabase(application).getExpensesDao()
+        _expenseFilter.value = ExpenseFilter()
 
         repository = ExpensesRepository(dao)
-        allExpenses = repository.allExpenses
+        allExpenses = expenseFilter.switchMap { filter ->
+            repository.getAllExpenses(filter.category?.categoryID, filter.valueFrom, filter.valueTo, filter.tsRange?.start, filter.tsRange?.last, filter.type)
+        }
     }
 
     fun insertExpense(name: String, value: Double, categoryId: Int?, expenseType: ExpenseType, onComplete: () -> Unit) {
@@ -81,5 +89,9 @@ class ExpensesViewModel(application: Application): AndroidViewModel(application)
 
     fun getExpenseById(expenseId: Int): LiveData<ExpenseWithCategory> {
         return repository.getExpenseById(expenseId)
+    }
+
+    fun setFilter(expenseFilter: ExpenseFilter) {
+        _expenseFilter.value = expenseFilter
     }
 }
