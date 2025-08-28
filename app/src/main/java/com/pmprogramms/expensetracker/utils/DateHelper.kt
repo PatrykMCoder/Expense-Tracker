@@ -1,10 +1,12 @@
 package com.pmprogramms.expensetracker.utils
 
+import android.icu.util.Calendar
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
+import java.time.MonthDay
 import java.time.ZoneId
 import java.time.temporal.TemporalAdjusters
 
@@ -43,6 +45,14 @@ class DateHelper {
             val endTS = end.toInstant().toEpochMilli()
 
             return startTS to endTS
+        }
+
+        fun getMillsFromDate(day: Int, month: Int, year: Int): Long {
+            val calendar = Calendar.getInstance()
+
+            calendar.set(year, month, day)
+
+            return calendar.timeInMillis
         }
     }
 }

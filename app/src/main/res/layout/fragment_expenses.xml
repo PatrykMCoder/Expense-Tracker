@@ -6,6 +6,100 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.ExpensesFragment">
 
+    <HorizontalScrollView
+        android:id="@+id/filters_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/categories_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/expense_type_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/date_picker_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="Date from..."
+                    android:textColor="@color/secondary"/>
+                <ImageButton
+                    android:id="@+id/clear_date_picker_from_button"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/outline_delete_forever_24"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/date_picker_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date to..."
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/secondary"/>
+
+                <ImageButton
+                    android:id="@+id/clear_date_picker_to_button"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/outline_delete_forever_24"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"/>
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/value_picker_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Value from..."
+                android:padding="15dp"
+                android:inputType="numberDecimal"
+                android:textColor="@color/secondary"/>
+
+
+            <EditText
+                android:id="@+id/value_picker_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Value to..."
+                android:padding="15dp"
+                android:inputType="numberDecimal"
+                android:textColor="@color/secondary"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/expenses_recycler_view"
@@ -18,6 +112,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/filters_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

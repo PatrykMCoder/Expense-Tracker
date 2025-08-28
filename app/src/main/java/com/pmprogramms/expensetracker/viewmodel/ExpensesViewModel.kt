@@ -38,7 +38,7 @@ class ExpensesViewModel(application: Application): AndroidViewModel(application)
 
         repository = ExpensesRepository(dao)
         allExpenses = expenseFilter.switchMap { filter ->
-            repository.getAllExpenses(filter.category?.categoryID, filter.valueFrom, filter.valueTo, filter.tsRange?.start, filter.tsRange?.last, filter.type)
+            repository.getAllExpenses(filter.category?.categoryID, filter.valueFrom, filter.valueTo, filter.tsFrom, filter.tsTo, filter.type)
         }
     }
 
