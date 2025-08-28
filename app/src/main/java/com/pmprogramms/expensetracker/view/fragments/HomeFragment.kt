@@ -125,15 +125,15 @@ class HomeFragment : Fragment() {
         val monthRangeEnd = DateHelper.monthRange().second
 
         viewModel.getAllExpensesByRange(dayRangeStart, dayRangeEnd).observe(viewLifecycleOwner) { data ->
-            binding.todayBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
+            binding.overviewCard.todayBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
         viewModel.getAllExpensesByRange(weekRangeStart, weekRangeEnd).observe(viewLifecycleOwner) { data ->
-            binding.weeklyBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
+            binding.overviewCard.weeklyBalance.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
         viewModel.getAllExpensesByRange(monthRangeStart, monthRangeEnd).observe(viewLifecycleOwner) { data ->
-            binding.balanceTextView.text = "${data} ${StringHelper.getCurrentCurrency()}"
+            binding.overviewCard.balanceTextView.text = "${data} ${StringHelper.getCurrentCurrency()}"
         }
 
         viewModel.deleteState.observe(viewLifecycleOwner) { result ->
