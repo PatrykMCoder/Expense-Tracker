@@ -5,4 +5,7 @@
     <color name="primary">#FFFFFF</color>
     <color name="secondary">#B0B0B0</color>
     <color name="disabled_text">#666666</color>
+
+    <!-- widget -->
+    <color name="widget_background">#000000</color>
 </resources>

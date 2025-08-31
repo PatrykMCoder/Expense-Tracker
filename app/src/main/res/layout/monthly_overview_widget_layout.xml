@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/widget_background"
+    android:padding="12dp">
+
+    <TextView
+            android:id="@+id/title_card_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current month balance"
+            android:textColor="@color/primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_margin="6dp"/>
+
+        <TextView
+            android:id="@+id/balance_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$ 2,000.43"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:textSize="36sp"
+            android:layout_below="@+id/title_card_text_view"/>
+
+            <LinearLayout
+                android:id="@+id/today_balance_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/balance_text_view">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Today's Expense"
+                        android:textColor="@color/secondary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/today_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="- $3,142"
+                        android:textColor="@color/secondary"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/weekly_balance_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/today_balance_container">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weekly Expense"
+                        android:textColor="@color/secondary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/weekly_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="- $11,247"
+                        android:textColor="@color/secondary"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+</RelativeLayout>

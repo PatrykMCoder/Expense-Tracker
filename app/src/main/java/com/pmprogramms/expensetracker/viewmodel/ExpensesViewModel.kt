@@ -14,6 +14,7 @@ import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.helper.ExpenseFilter
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import com.pmprogramms.expensetracker.repository.ExpensesRepository
+import com.pmprogramms.expensetracker.utils.MathHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -56,13 +57,7 @@ class ExpensesViewModel(application: Application): AndroidViewModel(application)
         val totalAmount = MediatorLiveData<Double>()
 
         totalAmount.addSource(currentMonthExpenses) { data ->
-            totalAmount.value = data.sumOf {
-                if (it.expense.expenseType == ExpenseType.IN) {
-                    it.expense.value!!
-                } else {
-                    it.expense.value!! * -1
-                }
-            }
+            totalAmount.value = MathHelper.sumExpenses(data)
         }
         return totalAmount
     }

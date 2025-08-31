@@ -9,4 +9,7 @@
     <color name="white">#ffffff</color>
     <color name="green">#34C759</color>
     <color name="red">#F44336</color>
+
+    <!-- widget -->
+    <color name="widget_background">#ffffff</color>
 </resources>
