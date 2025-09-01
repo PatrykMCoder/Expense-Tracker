@@ -66,6 +66,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    debugImplementation(libs.leakcanary.android)
 
     ksp(libs.androidx.room.compiler)
 }

@@ -23,57 +23,24 @@ import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.helper.StringHelper
 import com.pmprogramms.expensetracker.model.helper.ExpenseWithCategory
 import com.pmprogramms.expensetracker.utils.DateHelper
+import com.pmprogramms.expensetracker.utils.listeners.ExpenseBottomSheetClickListener
+import com.pmprogramms.expensetracker.view.dialogs.ExpenseDetailsBottomSheetDialog
 import com.pmprogramms.expensetracker.viewmodel.ExpensesViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ExpenseBottomSheetClickListener {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: ExpensesViewModel by viewModels()
 
-    private var bottomSheetDialog: BottomSheetDialog? = null
+    private var bottomSheetDialog: ExpenseDetailsBottomSheetDialog? = null
 
     private val onExpenseClickListener = object : ExpenseClickListener {
         override fun onClick(expenseWithCategory: ExpenseWithCategory) {
-            bottomSheetDialog = BottomSheetDialog(requireContext())
-
-            val btmSheet = layoutInflater.inflate(R.layout.bottom_sheet_dialog_expense, null)
-
-            val title = btmSheet.findViewById<TextView>(R.id.title_expense)
-            val category = btmSheet.findViewById<TextView>(R.id.category)
-            val value = btmSheet.findViewById<TextView>(R.id.value)
-            val date = btmSheet.findViewById<TextView>(R.id.date)
-            val editButton = btmSheet.findViewById<Button>(R.id.edit_button)
-            val deleteButton = btmSheet.findViewById<Button>(R.id.delete_button)
-
-            title.text = "Title: ${expenseWithCategory.expense.name}"
-            category.text = "Category: ${expenseWithCategory.category?.categoryName}"
-            date.text = "no date"
-            value.text = "${StringHelper.getChar(expenseWithCategory.expense.expenseType)}${expenseWithCategory.expense.value} ${StringHelper.getCurrentCurrency()}"
-
-            when (expenseWithCategory.expense.expenseType) {
-                ExpenseType.IN -> {
-                    value.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-                }
-                ExpenseType.OUT -> {
-                    value.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
-                }
-            }
-
-            deleteButton.setOnClickListener {
-                viewModel.deleteExpense(expenseWithCategory.expense.uid)
-            }
-
-            editButton.setOnClickListener {
-                bottomSheetDialog?.dismiss()
-                bottomSheetDialog = null
-                val direction = HomeFragmentDirections.actionHomeFragmentToEditExpenseFragment(expenseWithCategory.expense.uid)
-                findNavController().navigate(direction)
-            }
-
-            bottomSheetDialog?.setContentView(btmSheet)
-            bottomSheetDialog?.show()
+            bottomSheetDialog = ExpenseDetailsBottomSheetDialog.instance(expenseWithCategory.expense.uid)
+            bottomSheetDialog?.setClicksListener(this@HomeFragment)
+            bottomSheetDialog?.show(parentFragmentManager, "expense_details_dialog")
         }
     }
 
@@ -141,6 +108,7 @@ class HomeFragment : Fragment() {
                 is DeleteState.Error -> { Toast.makeText(context, "Something wrong with delete expense...", Toast.LENGTH_SHORT).show() }
                 is DeleteState.Loading -> {}
                 is DeleteState.Success<*> -> {
+                    bottomSheetDialog?.removeClickListener()
                     bottomSheetDialog?.dismiss()
                     bottomSheetDialog = null
                     Toast.makeText(context, "Expense deleted...", Toast.LENGTH_SHORT).show()
@@ -153,5 +121,17 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDeleteClick(id: Int) {
+        viewModel.deleteExpense(id)
+    }
+
+    override fun onEditClick(id: Int) {
+        bottomSheetDialog?.removeClickListener()
+        bottomSheetDialog?.dismiss()
+        bottomSheetDialog = null
+        val direction = HomeFragmentDirections.actionHomeFragmentToEditExpenseFragment(id)
+        findNavController().navigate(direction)
     }
 }
