@@ -22,7 +22,7 @@ The project follows the **MVVM** architecture pattern with **Room Database** for
 
 ## 🗄️ Database schema
 
-```mermaid
+```kotlin
 @Entity(tableName = "expenses",
     foreignKeys = [ForeignKey(
         entity = Category::class,
