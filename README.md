@@ -48,13 +48,9 @@ data class Category(
 
 ## 📸 Screenshots
 
-<p align="center">
-<img width="700" height="2992" alt="Image" src="https://github.com/user-attachments/assets/6ba933c0-066f-4065-bdf4-619cf358551f" />
-<img width="1344" height="2992" alt="Image" src="https://github.com/user-attachments/assets/ff7a6759-b75a-4c34-9c98-a754e5e5fd8b" />
-<img width="1344" height="2992" alt="Image" src="https://github.com/user-attachments/assets/fbc57a90-e5a8-4114-a35d-6d7366cc0159" />
-<img width="1344" height="2992" alt="Image" src="https://github.com/user-attachments/assets/b631623b-152a-469c-96a6-80c4da4388da" />
-<img width="1344" height="2992" alt="Image" src="https://github.com/user-attachments/assets/f5050881-cdaf-4c08-a257-76a3308fc829" />
-</p>
+| Screen 1 | Screen 2 | Screen 3 | Screen 4 | Screen 5 |
+|----------|----------|----------|----------|----------|
+| ![s1](https://github.com/user-attachments/assets/6ba933c0-066f-4065-bdf4-619cf358551f) | ![s2](https://github.com/user-attachments/assets/ff7a6759-b75a-4c34-9c98-a754e5e5fd8b) | ![s3](https://github.com/user-attachments/assets/fbc57a90-e5a8-4114-a35d-6d7366cc0159) | ![s4](https://github.com/user-attachments/assets/b631623b-152a-469c-96a6-80c4da4388da) | ![s5](https://github.com/user-attachments/assets/f5050881-cdaf-4c08-a257-76a3308fc829)|
 
 ## ⚙️ Installation
 
