@@ -7,17 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pmprogramms.expensetracker.R
-import com.pmprogramms.expensetracker.adapter.listeners.ExpenseClickListener
 import com.pmprogramms.expensetracker.databinding.BottomSheetDialogExpenseBinding
-import com.pmprogramms.expensetracker.databinding.FragmentHomeBinding
 import com.pmprogramms.expensetracker.enums.ExpenseType
 import com.pmprogramms.expensetracker.helper.StringHelper
 import com.pmprogramms.expensetracker.utils.listeners.ExpenseBottomSheetClickListener
-import com.pmprogramms.expensetracker.view.fragments.HomeFragmentDirections
 import com.pmprogramms.expensetracker.viewmodel.ExpensesViewModel
 
 class ExpenseDetailsBottomSheetDialog : BottomSheetDialogFragment() {
@@ -58,7 +53,7 @@ class ExpenseDetailsBottomSheetDialog : BottomSheetDialogFragment() {
             expensesViewModel.getExpenseById(id).observe(viewLifecycleOwner) { data ->
                 val expense = data.expense
                 val category = data.category
-                binding.title.text = "Title: ${expense.name}"
+                binding.title.text = expense.name
                 binding.category.text = "Category: ${category?.categoryName}"
                 binding.date.text = "no date"
                 binding.value.text = "${StringHelper.getChar(expense.expenseType)}${expense.value} ${StringHelper.getCurrentCurrency()}"
